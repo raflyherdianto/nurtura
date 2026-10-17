@@ -266,6 +266,22 @@ docker run --rm -p 8000:8000 `
 
 In a hosted environment, prefer workload identity or the platform's attached service account over a JSON key. The image does not contain local `.env` files, ADC files, virtual environments, or test artifacts.
 
+## Cloud Run deployment
+
+The production topology uses two Cloud Run services in `asia-southeast2`:
+
+- `nurtura-frontend` serves the compiled Vue application through an unprivileged Nginx image.
+- `nurtura-backend` runs FastAPI with the dedicated `nurtura-backend` service account and Vertex AI access.
+
+The intended public endpoints are:
+
+- `https://nurtura.web.id`
+- `https://api.nurtura.web.id`
+
+The frontend image is built with `VITE_API_BASE_URL=https://api.nurtura.web.id/api/v1`. Configure the Cloud Run domain mappings and the corresponding Cloudflare DNS records before using the custom domains. Keep Cloudflare proxying disabled while completing domain verification and certificate issuance; it can be enabled afterward if the Cloudflare TLS mode is set to **Full (strict)**.
+
+The deployed services use cost guardrails: `min-instances=0`, `max-instances=2`, backend concurrency `10`, frontend concurrency `80`, bounded request timeouts, and a dedicated least-privilege backend service account. Billing budgets are alerts rather than hard spending caps, so monitor Vertex AI usage and Cloud Run requests separately.
+
 ## API contract
 
 Milestone requests use a compact, explicit payload:
