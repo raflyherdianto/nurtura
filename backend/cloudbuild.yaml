@@ -1,0 +1,40 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    dir: backend
+    args:
+      - build
+      - -t
+      - ${_IMAGE}
+      - .
+  - name: gcr.io/cloud-builders/docker
+    dir: backend
+    args:
+      - push
+      - ${_IMAGE}
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    dir: backend
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - nurtura-backend
+      - --image=${_IMAGE}
+      - --region=asia-southeast1
+      - --project=gen-lang-client-0272762713
+      - --platform=managed
+      - --service-account=nurtura-backend@gen-lang-client-0272762713.iam.gserviceaccount.com
+      - --allow-unauthenticated
+      - --ingress=all
+      - --min-instances=0
+      - --max-instances=2
+      - --concurrency=10
+      - --cpu=1
+      - --memory=1Gi
+      - --timeout=120s
+      - --env-vars-file=cloudrun.env.yaml
+
+images:
+  - ${_IMAGE}
+
+substitutions:
+  _IMAGE: asia-southeast1-docker.pkg.dev/gen-lang-client-0272762713/nurtura/backend:latest

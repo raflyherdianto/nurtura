@@ -327,6 +327,36 @@ These are intentionally not represented as shipped features:
 
 Each roadmap item requires a separate privacy, consent, access-control, and clinical-safety review before production use.
 
+## Continuous deployment
+
+Cloud Build deploys the two services independently from the `main` branch:
+
+- Changes under `frontend/**` trigger the frontend build and deploy only.
+- Changes under `backend/**` trigger the backend build and deploy only.
+- Changes outside those directories do not deploy either service.
+
+Both pipelines use the regional Artifact Registry repository in `asia-southeast1`, Cloud Run instance limits, and the dedicated backend service account. The GitHub connection must be authorized in Cloud Build before creating the triggers:
+
+```powershell
+gcloud builds triggers create github `
+  --name=nurtura-frontend-main `
+  --repo-owner=raflyherdianto `
+  --repo-name=nurtura `
+  --branch-pattern="^main$" `
+  --build-config=frontend/cloudbuild.yaml `
+  --included-files="frontend/**"
+
+gcloud builds triggers create github `
+  --name=nurtura-backend-main `
+  --repo-owner=raflyherdianto `
+  --repo-name=nurtura `
+  --branch-pattern="^main$" `
+  --build-config=backend/cloudbuild.yaml `
+  --included-files="backend/**"
+```
+
+The triggers require a Cloud Build service account with permission to deploy Cloud Run and to impersonate `nurtura-backend@gen-lang-client-0272762713.iam.gserviceaccount.com`. They do not create a hard billing cap; the existing `min-instances=0` and `max-instances=2` limits remain active.
+
 ## Sources
 
 - [Google Cloud: Authenticate for Gemini on Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/docs/start/gcp-auth)

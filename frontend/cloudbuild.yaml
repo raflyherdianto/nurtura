@@ -1,5 +1,6 @@
 steps:
   - name: gcr.io/cloud-builders/docker
+    dir: frontend
     args:
       - build
       - --build-arg
@@ -7,10 +8,26 @@ steps:
       - -t
       - ${_IMAGE}
       - .
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - run
+      - deploy
+      - nurtura-frontend
+      - --image=${_IMAGE}
+      - --region=asia-southeast1
+      - --project=gen-lang-client-0272762713
+      - --platform=managed
+      - --allow-unauthenticated
+      - --ingress=all
+      - --min-instances=0
+      - --max-instances=2
+      - --concurrency=80
+      - --cpu=1
+      - --memory=256Mi
 
 images:
   - ${_IMAGE}
 
 substitutions:
-  _IMAGE: asia-southeast2-docker.pkg.dev/gen-lang-client-0272762713/nurtura/frontend:latest
-  _VITE_API_BASE_URL: https://nurtura.web.id/api/v1
+  _IMAGE: asia-southeast1-docker.pkg.dev/gen-lang-client-0272762713/nurtura/frontend:latest
+  _VITE_API_BASE_URL: https://nurtura-backend-767164979300.asia-southeast1.run.app/api/v1
