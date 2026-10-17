@@ -1,0 +1,25 @@
+{
+  "name": "nurtura",
+  "version": "1.0.0",
+  "description": "Nurtura: AI Co-Parenting & Early Childhood Development Platform",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "free-ports": "node scripts/free-ports.js",
+    "build": "npm --prefix frontend run build",
+    "test:backend": "cd backend && .\\.venv\\Scripts\\python.exe -m pytest -v",
+    "test:frontend": "npm --prefix frontend run build",
+    "test": "npm run test:backend && npm run test:frontend"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "keywords": [
+    "co-parenting",
+    "gemini",
+    "fastapi",
+    "vue3",
+    "child-development",
+    "anti-stunting"
+  ]
+}

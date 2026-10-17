@@ -1,0 +1,90 @@
+# -----------------------------------------------------------------------------
+# Secrets and local environment
+# -----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.local
+*.secret
+*.key
+*.pem
+*.p12
+*.pfx
+service-account*.json
+*-service-account*.json
+credentials*.json
+application_default_credentials.json
+
+# -----------------------------------------------------------------------------
+# Python
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+pytestdebug.log
+*.egg-info/
+pip-wheel-metadata/
+*.log
+
+# -----------------------------------------------------------------------------
+# Node, Vite, and frontend tooling
+# -----------------------------------------------------------------------------
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+.yarn-cache/
+.vite/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -----------------------------------------------------------------------------
+# Docker and cloud tooling
+# -----------------------------------------------------------------------------
+.docker/
+.docker-build/
+.firebase/
+.gcloud/
+firebase-debug.log
+firestore-debug.log
+*.tar
+*.tar.gz
+
+# -----------------------------------------------------------------------------
+# IDE and operating system files
+# -----------------------------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# -----------------------------------------------------------------------------
+# Project-specific local/demo artifacts
+# -----------------------------------------------------------------------------
+/Nurtura-argon.html
+/Nurtura-claude.html

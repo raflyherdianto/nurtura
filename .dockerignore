@@ -1,0 +1,54 @@
+# Repository metadata and local tooling
+.git/
+.gitignore
+.dockerignore
+.vscode/
+.idea/
+
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+service-account*.json
+*-service-account*.json
+credentials*.json
+application_default_credentials.json
+
+# Python development artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+htmlcov/
+*.egg-info/
+*.log
+
+# Node/frontend dependencies and generated output
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+
+# Local caches and generated artifacts
+.pytest_cache/
+dist/
+build/
+coverage/
+.firebase/
+.gcloud/
+
+# Local design/demo files
+Nurtura-argon.html
+Nurtura-claude.html

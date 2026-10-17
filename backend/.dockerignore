@@ -1,0 +1,42 @@
+# Repository metadata and local tooling
+.git/
+.gitignore
+.dockerignore
+.vscode/
+.idea/
+
+# Never copy local credentials into an image
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+service-account*.json
+*-service-account*.json
+credentials*.json
+application_default_credentials.json
+
+# Python development artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+htmlcov/
+*.egg-info/
+*.log
+
+# Local build and documentation artifacts
+dist/
+build/
+coverage/
+Nurtura-argon.html
+Nurtura-claude.html
