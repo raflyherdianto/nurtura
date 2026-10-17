@@ -268,7 +268,7 @@ In a hosted environment, prefer workload identity or the platform's attached ser
 
 ## Cloud Run deployment
 
-The production topology uses two Cloud Run services in `asia-southeast2`:
+The production topology uses two Cloud Run services in `asia-southeast1` (Singapore), the nearest Cloud Run region that supports managed custom domain mappings:
 
 - `nurtura-frontend` serves the compiled Vue application through an unprivileged Nginx image.
 - `nurtura-backend` runs FastAPI with the dedicated `nurtura-backend` service account and Vertex AI access.
