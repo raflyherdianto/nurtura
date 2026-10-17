@@ -176,9 +176,9 @@ const handleStartAnalysis = async () => {
 
             <!-- Status Indicator -->
             <div v-if="isLiveEvaluated" style="margin-bottom: .6rem;">
-              <span class="tag" style="background: rgba(74, 94, 53, 0.12); color: #3b5025; border: 1.5px solid var(--forest); display: inline-flex; align-items: center;">
-                <span lang="id">Hasil Analisis Dinamis AI (FastAPI + Gemini)</span>
-                <span lang="en">Live Dynamic AI Evaluation (FastAPI + Gemini)</span>
+              <span class="tag" style="background: var(--band); color: var(--mustard); border: 1.5px solid var(--band); display: inline-flex; align-items: center;">
+                <span lang="id">Hasil Analisis Dinamis AI</span>
+                <span lang="en">Live Dynamic AI Evaluation</span>
               </span>
             </div>
             <div
