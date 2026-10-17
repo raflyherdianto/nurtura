@@ -355,7 +355,7 @@ gcloud builds triggers create github `
   --included-files="backend/**"
 ```
 
-The triggers require a Cloud Build service account with permission to deploy Cloud Run and to impersonate `nurtura-backend@gen-lang-client-0272762713.iam.gserviceaccount.com`. They do not create a hard billing cap; the existing `min-instances=0` and `max-instances=2` limits remain active.
+The triggers use the user-managed `nurtura-deployer` service account with permission to build images, deploy Cloud Run, write Artifact Registry images, and impersonate the runtime service account. Build logs use Cloud Logging only. The triggers do not create a hard billing cap; the existing `min-instances=0` and `max-instances=2` limits remain active.
 
 ## Sources
 

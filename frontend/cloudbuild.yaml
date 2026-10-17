@@ -32,6 +32,9 @@ steps:
 images:
   - ${_IMAGE}
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 substitutions:
   _IMAGE: asia-southeast1-docker.pkg.dev/gen-lang-client-0272762713/nurtura/frontend:latest
   _VITE_API_BASE_URL: https://nurtura-backend-767164979300.asia-southeast1.run.app/api/v1
