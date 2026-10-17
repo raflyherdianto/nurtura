@@ -17,6 +17,7 @@ const activeMealTime = ref<MealTime>('siang');
 const isAnalyzingPlate = ref<boolean>(false);
 const lastAuditResult = ref<PlateAuditApiResponse | null>(null);
 const hasAudited = ref<boolean>(false);
+const analysisError = ref<string | null>(null);
 const uploadedPhotoUrl = ref<string | null>(null);
 const userOverrodeTexture = ref<boolean>(false);
 
@@ -90,6 +91,7 @@ export function usePlateLab() {
     selectedItems.value = {};
     lastAuditResult.value = null;
     hasAudited.value = false;
+    analysisError.value = null;
     userOverrodeTexture.value = false;
   };
 
@@ -198,6 +200,7 @@ export function usePlateLab() {
   // Live Audit with FastAPI backend
   const auditPlateWithApi = async (notes?: string) => {
     isAnalyzingPlate.value = true;
+    analysisError.value = null;
     const currentItemList = Object.keys(selectedItems.value).filter((k) => selectedItems.value[k]);
     try {
       const res = await apiClient.auditPlate(
@@ -212,9 +215,8 @@ export function usePlateLab() {
         notes
       );
       lastAuditResult.value = res;
-    } catch {
-      // Graceful offline fallback
-      await new Promise((resolve) => setTimeout(resolve, 600));
+    } catch (error) {
+      analysisError.value = error instanceof Error ? error.message : 'Gemini analysis failed.';
     } finally {
       isAnalyzingPlate.value = false;
       hasAudited.value = true;
@@ -223,6 +225,7 @@ export function usePlateLab() {
 
   const auditPlateWithPhoto = async (file: File) => {
     isAnalyzingPlate.value = true;
+    analysisError.value = null;
     userOverrodeTexture.value = false;
     if (uploadedPhotoUrl.value) {
       URL.revokeObjectURL(uploadedPhotoUrl.value);
@@ -262,8 +265,9 @@ export function usePlateLab() {
         });
         selectedItems.value = newMap;
       }
-    } catch {
-      await new Promise((resolve) => setTimeout(resolve, 800));
+    } catch (error) {
+      analysisError.value = error instanceof Error ? error.message : 'Gemini analysis failed.';
+      hasAudited.value = false;
     } finally {
       isAnalyzingPlate.value = false;
       hasAudited.value = true;
@@ -306,6 +310,7 @@ export function usePlateLab() {
     isAnalyzingPlate,
     isLiveAudit,
     hasAudited,
+    analysisError,
     ragSources,
     dynamicBoosterRecipe,
     dynamicUpgradeSummary,

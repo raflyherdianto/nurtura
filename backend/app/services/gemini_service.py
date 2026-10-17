@@ -1,7 +1,9 @@
 import asyncio
+import html
 import json
 import logging
 import os
+import re
 import uuid
 from typing import Any, Dict, List, Optional
 from app.core.config import get_settings
@@ -391,7 +393,20 @@ Only return the valid JSON, no markdown codeblocks or extra text.
         if text.endswith("```"):
             text = text[:-3]
         text = text.strip()
-        return json.loads(text)
+        return self._sanitize_payload(json.loads(text))
+
+    @classmethod
+    def _sanitize_payload(cls, value: Any) -> Any:
+        """Keep model output textual; never allow markup to reach the UI."""
+        if isinstance(value, str):
+            value = html.unescape(value)
+            value = re.sub(r"<\s*br\s*/?\s*>", "\n", value, flags=re.IGNORECASE)
+            return re.sub(r"<[^>]*>", "", value).strip()
+        if isinstance(value, list):
+            return [cls._sanitize_payload(item) for item in value]
+        if isinstance(value, dict):
+            return {key: cls._sanitize_payload(item) for key, item in value.items()}
+        return value
 
     # -------------------------------------------------------------
     # Pediatric Deterministic Fallback Engine

@@ -20,6 +20,7 @@ const {
   isAnalyzingPlate,
   isLiveAudit,
   hasAudited,
+  analysisError,
   ragSources,
   dynamicBoosterRecipe,
   dynamicUpgradeSummary,
@@ -112,6 +113,14 @@ const mealTimes: { key: MealTime; label: { id: string; en: string } }[] = [
 <template>
   <section id="modul-2" class="band band--paper2">
     <div class="wrap">
+      <div
+        v-if="analysisError"
+        role="alert"
+        style="margin-bottom: 1rem; padding: .8rem 1rem; border: 1.5px solid #b42318; border-left: 4px solid #b42318; border-radius: .6rem; background: #fff4f2; color: #7a271a; line-height: 1.45;"
+      >
+        <span lang="id">Analisis Gemini gagal: {{ analysisError }}</span>
+        <span lang="en">Gemini analysis failed: {{ analysisError }}</span>
+      </div>
       <div class="mod__head">
         <div>
           <p class="label">
